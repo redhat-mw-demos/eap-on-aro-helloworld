@@ -29,6 +29,11 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import io.kubernetes.client.openapi.ApiClient;
+import io.kubernetes.client.openapi.apis.CoreV1Api;
+import io.kubernetes.client.openapi.models.V1NodeList;
+import io.kubernetes.client.util.Config;
+
 /**
  * A simple REST service which is able to say hello to someone using HelloService Please take a look at the web.xml where JAX-RS
  * is enabled And notice the @PathParam which expects the URL to contain /json/David or /xml/Mary
@@ -43,7 +48,14 @@ public class HelloWorld {
     @GET
     @Path("/javadetails")
     @Produces(MediaType.APPLICATION_JSON)
-    public Map<String, String> geJavaDetails() {
+    public Map<String, String> geJavaDetails() throws Exception  {
+        ApiClient client  = Config.defaultClient();
+        CoreV1Api api = new CoreV1Api(client);
+        V1NodeList nodeList = api.listNode(null, null, null, null, null, null, null, null, 10, false);
+        nodeList.getItems()
+          .stream()
+          .forEach((node) -> System.out.println(node.getMetadata()));
+
         Map<String, String> dets = new HashMap<String, String>();
         dets.put("Vendor", System.getProperty("java.vendor"));
         dets.put("Vendor Link", System.getProperty("java.vendor.url"));

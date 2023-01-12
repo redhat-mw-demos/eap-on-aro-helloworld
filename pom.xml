@@ -54,7 +54,13 @@
             <groupId>jakarta.platform</groupId>
             <artifactId>jakarta.jakartaee-api</artifactId>
         </dependency>
-    </dependencies>
+        <dependency>
+            <groupId>io.kubernetes</groupId>
+            <artifactId>client-java</artifactId>
+            <version>11.0.0</version>
+        </dependency>   
+     </dependencies>
+
 
     <build>
         <!-- Set the name of the WAR, used as the context root when the app is deployed -->
@@ -84,6 +90,16 @@
                 </configuration>
             </plugin>
         </plugins>
+        <pluginManagement>
+            <plugins>
+
+                <plugin>
+                    <groupId>org.wildfly.plugins</groupId>
+                    <artifactId>wildfly-maven-plugin</artifactId>
+                    <version>2.0.2.Final</version>
+                </plugin>
+                </plugins>
+                </pluginManagement>
     </build>
 
 </project>
