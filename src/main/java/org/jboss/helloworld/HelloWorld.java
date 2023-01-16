@@ -35,7 +35,8 @@ import io.kubernetes.client.openapi.Configuration;
 import io.kubernetes.client.openapi.apis.CoreV1Api;
 import io.kubernetes.client.openapi.models.V1Pod;
 import io.kubernetes.client.openapi.models.V1PodList;
-import io.kubernetes.client.util.Config;
+import io.kubernetes.client.util.ClientBuilder;
+import java.io.IOException;
 
 /**
  * A simple REST service which is able to say hello to someone using HelloService Please take a look at the web.xml where JAX-RS
@@ -51,14 +52,23 @@ public class HelloWorld {
     @GET
     @Path("/javadetails")
     @Produces(MediaType.APPLICATION_JSON)
-    public Map<String, String> geJavaDetails() throws Exception  {
-        ApiClient client = Config.defaultClient();
-        Configuration.setDefaultApiClient(client);
+    public Map<String, String> geJavaDetails() throws IOException, ApiException  {
+        ApiClient client = ClientBuilder.cluster().build();
 
+        // if you prefer not to refresh service account token, please use:
+        // ApiClient client = ClientBuilder.oldCluster().build();
+    
+        // set the global default api-client to the in-cluster one from above
+        Configuration.setDefaultApiClient(client);
+    
+        // the CoreV1Api loads default api-client from global configuration.
         CoreV1Api api = new CoreV1Api();
-        V1PodList list = api.listPodForAllNamespaces(null, null, null, null, null, null, null, null, null, null);
+    
+        // invokes the CoreV1Api client
+        V1PodList list =
+            api.listPodForAllNamespaces(null, null, null, null, null, null, null, null, null, null);
         for (V1Pod item : list.getItems()) {
-            System.out.println(item.getMetadata().getName());
+          System.out.println(item.getMetadata().getName());
         }
 
         Map<String, String> dets = new HashMap<String, String>();
