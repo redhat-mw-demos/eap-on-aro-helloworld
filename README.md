@@ -12,7 +12,7 @@ Click on "Project" and then click on "create a Project".
 
 ![Create project](src/main/webapp/assets/img/create-project.png)
 
-Goto "Helm" and click on "Install a Helm Chart from the developer catalog"
+Click on "Create" and then go to "Helm" and click on "Install a Helm Chart from the developer catalog"
 
 ![Helm install](src/main/webapp/assets/img/helm.png)
 
