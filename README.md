@@ -6,7 +6,7 @@ This is a simple application that demonstrates a basic deployment of an applicat
 
 ## Steps to deploy EAP app to Azure Red Hat OpenShift
 
-Create the OpenShift project
+Create a new OpenShift project e.g "eap".
 
 From the Developer UI, goto "Helm" and click on "Install a Helm Chart from the developer catalog"
 
