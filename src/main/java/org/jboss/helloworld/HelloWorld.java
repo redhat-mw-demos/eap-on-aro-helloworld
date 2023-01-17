@@ -61,4 +61,30 @@ public class HelloWorld {
         return (Map)System.getProperties();
     }
 
+    @GET
+    @Path("/openshiftconfig")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Map<String, String> getOpenshift() {
+        Map<String, String> dets = new HashMap<String, String>();
+        dets.put("Project name", System.getenv("OPENSHIFT_BUILD_NAMESPACE"));
+        dets.put("Build", System.getenv("OPENSHIFT_BUILD_NAME"));
+        dets.put("Pod name", System.getenv("HOSTNAME"));
+        dets.put("Managed by",getLabelVal("managed-by"));
+        dets.put("Application Name",getLabelVal("name"));
+        return dets;
+    }
+
+    private String getLabelVal(String label) {
+        // app.kubernetes.io/managed-by=eap-operator,app.kubernetes.io/name=kitchen-sink,app.openshift.io/runtime=eap
+        String labels = System.getenv("KUBERNETES_LABELS");
+        if (labels == null) {
+            return null;
+        } else {
+            String temp = labels.substring(labels.lastIndexOf(label)+label.length()+1);
+            String ret = temp.substring(0,temp.indexOf(","));
+            return ret;
+        }
+
+    }
+
 }

@@ -68,6 +68,20 @@
             <ul class="list-unstyled mt-3 mb-4" id="serverconfigresult"></ul>
         </div>
       </div>
+      <div class="card mb-4 box-shadow">
+        <div class="card-header">
+          <h4 class="my-0 font-weight-normal">OpenShift Configuration</h4>
+        </div>
+        <div class="card-body">
+          <img src="assets/img/openshift-logo.png" height="50px">
+          <ul class="list-unstyled mt-3 mb-4">
+            <li></li>
+            <li>Click below to retrieve all system properties from OpenShift</li>
+          </ul>
+            <button type="button" id="openshiftconfig" class="btn btn-lg btn-block btn-primary">OpenShift Configuration</button>
+            <ul class="list-unstyled mt-3 mb-4" id="openshiftconfigresult"></ul>
+        </div>
+      </div>
     </div>
 
     <br />
@@ -91,10 +105,6 @@
 
     <footer class="pt-4 my-md-5 pt-md-5 border-top">
       <div class="row">
-        <div class="col-12 col-md">
-          <img class="mb-2" src="assets/img/redhat.png" alt="" width="24" height="24">
-          <small class="d-block mb-3 text-muted">&copy; 2023</small>
-        </div>
         <div class="col-6 col-md">
           <h5>Features</h5>
           <ul class="list-unstyled text-small">
@@ -133,6 +143,11 @@
           </ul>
         </div>
       </div>
+      <div class="row">
+        <div class="col-12 col-md">
+          <img class="mb-2" src="assets/img/redhat.png" alt="" width="24" height="24">
+          <small class="d-block mb-3 text-muted">&copy; 2023</small>
+        </div>
     </footer>
   </div>
 
@@ -159,8 +174,15 @@
 
 <script type="text/javascript">
   $( document ).ready( function() {
+    var javadetailsvisible = false;
+    var eapdetailsvisible = false;
+    var ocpdetailsvisible = false;
+
       $( '#javadetails' ).click( function( event ) {
-        console.log("clicked");
+        if (!javadetailsvisible){
+          javadetailsvisible = true;
+          var javadetailsElement = document.getElementById('javadetailsresult');
+          javadetailsElement.style.display = 'block';
           event.preventDefault();
 
           var result = $( '#javadetailsresult' );
@@ -180,9 +202,18 @@
                 console.log("error: " + err);
               }
           })
+        } else {
+          javadetailsvisible = false;
+          var javadetailsElement = document.getElementById('javadetailsresult');
+          javadetailsElement.style.display = 'none';
+        }
       });
 
       $( '#serverconfig' ).click( function( event ) {
+        if (!eapdetailsvisible){
+          eapdetailsvisible = true;
+          var eapdetailsElement = document.getElementById('serverconfigresult');
+          eapdetailsElement.style.display = 'block';
           event.preventDefault();
 
           var result = $( '#serverconfigresult' );
@@ -203,6 +234,43 @@
                 console.log("error: " + err);
               }
           })
+        } else {
+          eapdetailsvisible = false;
+          var eapdetailsElement = document.getElementById('serverconfigresult');
+          eapdetailsElement.style.display = 'none';
+        }
+      });
+
+      $( '#openshiftconfig' ).click( function( event ) {
+        if (!ocpdetailsvisible){
+          ocpdetailsvisible = true;
+          var ocpdetailsElement = document.getElementById('openshiftconfigresult');
+          ocpdetailsElement.style.display = 'block';
+          event.preventDefault();
+
+          var result = $( '#openshiftconfigresult' );
+          console.log("result:" + result);
+          result.removeClass( 'invalid' );
+
+          $.ajax( 'services/openshiftconfig', {
+              type:'GET',
+              success:function ( data ) {
+                  console.log("success: " + JSON.stringify(data));
+                  $( '#openshiftconfigresult' ).empty();
+                  for (const [key, value] of Object.entries(data)) {
+                    $( '#openshiftconfigresult' ).append('<li><b>' + key + "</b> = <code>" + value + "</code></li>");
+
+                  }
+              },
+              error: function(err) {
+                console.log("error: " + err);
+              }
+          })
+        } else {
+          ocpdetailsvisible = false;
+          var ocpdetailsElement = document.getElementById('openshiftconfigresult');
+          ocpdetailsElement.style.display = 'none';
+        }
       });
 
   }); // (document).ready
