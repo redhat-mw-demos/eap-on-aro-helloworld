@@ -68,6 +68,20 @@
             <ul class="list-unstyled mt-3 mb-4" id="serverconfigresult"></ul>
         </div>
       </div>
+      <div class="card mb-4 box-shadow">
+        <div class="card-header">
+          <h4 class="my-0 font-weight-normal">OpenShift Configuration</h4>
+        </div>
+        <div class="card-body">
+          <img src="assets/img/openshift-logo.png" height="50px">
+          <ul class="list-unstyled mt-3 mb-4">
+            <li></li>
+            <li>Click below to retrieve all system properties from OpenShift</li>
+          </ul>
+            <button type="button" id="openshiftconfig" class="btn btn-lg btn-block btn-primary">OpenShift Configuration</button>
+            <ul class="list-unstyled mt-3 mb-4" id="openshiftconfigresult"></ul>
+        </div>
+      </div>
     </div>
 
     <br />
@@ -196,6 +210,29 @@
                   $( '#serverconfigresult' ).empty();
                   for (const [key, value] of Object.entries(data)) {
                     $( '#serverconfigresult' ).append('<li><b>' + key + "</b> = <code>" + value + "</code></li>");
+
+                  }
+              },
+              error: function(err) {
+                console.log("error: " + err);
+              }
+          })
+      });
+
+      $( '#openshiftconfig' ).click( function( event ) {
+          event.preventDefault();
+
+          var result = $( '#openshiftconfigresult' );
+          console.log("result:" + result);
+          result.removeClass( 'invalid' );
+
+          $.ajax( 'services/openshiftconfig', {
+              type:'GET',
+              success:function ( data ) {
+                  console.log("success: " + JSON.stringify(data));
+                  $( '#openshiftconfigresult' ).empty();
+                  for (const [key, value] of Object.entries(data)) {
+                    $( '#openshiftconfigresult' ).append('<li><b>' + key + "</b> = <code>" + value + "</code></li>");
 
                   }
               },

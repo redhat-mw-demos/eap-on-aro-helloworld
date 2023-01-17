@@ -61,4 +61,17 @@ public class HelloWorld {
         return (Map)System.getProperties();
     }
 
+    @GET
+    @Path("/openshiftconfig")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Map<String, String> getOpenshift() {
+        Map<String, String> dets = new HashMap<String, String>();
+        dets.put("Project name", System.getenv("KUBERNETES_NAMESPACE"));
+        dets.put("Build", System.getenv("OPENSHIFT_BUILD_NAME"));
+        dets.put("Pod name", System.getenv("HOSTNAME"));
+
+
+        return dets;
+    }
+
 }
