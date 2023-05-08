@@ -1,6 +1,6 @@
 # Red Hat JBoss EAP on Azure Red Hat OpenShift Hello World
 
-This is a simple application that demonstrates a basic deployment of an application Azure Red Hat OpenShift.
+This is a simple application that demonstrates a basic deployment of an application Azure Red Hat OpenShift. The app is a "properties browser" type app: you can explore the properties of the deployed app. This makes the app useful for demonstrating the correlation between the actual deployed app and the environment in which the app is running (the ARO cluster and its enclosing runtime infrastructure, such as a public cloud environment).
 
 ![Screenshot](src/main/webapp/assets/img/page.png)
 
