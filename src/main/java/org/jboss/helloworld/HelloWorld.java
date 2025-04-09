@@ -32,7 +32,7 @@ import jakarta.ws.rs.core.MediaType;
  * @author bsutter@redhat.com
  */
 
- @ApplicationScoped
+@ApplicationScoped
 @Path("/")
 public class HelloWorld {
 
