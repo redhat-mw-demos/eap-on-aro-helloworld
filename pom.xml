@@ -28,6 +28,7 @@
         <jakartaee-api.version>8.0.0</jakartaee-api.version>
         <project.encoding>UTF-8</project.encoding>
         <version.server.bom>8.0.0.GA-redhat-00009</version.server.bom>
+        <version.eap.maven.plugin>1.0.0.Final-redhat-00014</version.eap.maven.plugin>
     </properties>
 
     <licenses>
@@ -58,8 +59,6 @@
 
 
     <build>
-        <!-- Set the name of the WAR, used as the context root when the app is deployed -->
-        <finalName>${project.artifactId}</finalName>
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -103,7 +102,7 @@
                     <plugin>
                         <groupId>org.jboss.eap.plugins</groupId>
                         <artifactId>eap-maven-plugin</artifactId>
-                        <version>1.0.0.Final-redhat-00014</version>
+                        <version>${version.eap.maven.plugin}</version>
                         <configuration>
                             <channels>
                                 <channel>
