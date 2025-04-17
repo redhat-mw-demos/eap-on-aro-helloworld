@@ -25,7 +25,7 @@
     <description>A project that demonstrates Hello World using HTML</description>
 
     <properties>
-        <jakartaee-api.version>9.1.0</jakartaee-api.version>
+        <jakartaee-api.version>10.0.0</jakartaee-api.version>
         <project.encoding>UTF-8</project.encoding>
         <version.server.bom>8.0.0.GA-redhat-00009</version.server.bom>
         <version.eap.maven.plugin>1.0.0.Final-redhat-00014</version.eap.maven.plugin>
